@@ -1,5 +1,4 @@
 import express from 'express';
-import cors from 'cors';
 import ModelClient from "@azure-rest/ai-inference";
 import { AzureKeyCredential } from "@azure/core-auth";
 import dotenv from 'dotenv';
@@ -12,30 +11,18 @@ const modelName = "gpt-4o-mini";
 
 const app = express();
 
-// Updated CORS configuration
-const allowedOrigins = [
-    'chrome-extension://epadkibamflmgdggkpbbgndjfpijnoce',
-    'https://better-prompt-ashy.vercel.app',
-    'https://better-prompt-git-main-sai-roopeshs-projects.vercel.app',
-    'https://better-prompt-o47u520f1-sai-roopeshs-projects.vercel.app'
-];
-
-app.use(cors({
-    origin: function (origin, callback) {
-        // Allow requests with no origin (like mobile apps or curl requests)
-        if (!origin) return callback(null, true);
-        if (allowedOrigins.indexOf(origin) === -1) {
-            var msg = 'The CORS policy for this site does not allow access from the specified Origin.';
-            return callback(new Error(msg), false);
-        }
-        return callback(null, true);
-    },
-    methods: ['GET', 'POST', 'OPTIONS'],
-    allowedHeaders: ['Content-Type', 'Authorization']
-}));
+// Disable CORS
+app.use((req, res, next) => {
+    res.header("Access-Control-Allow-Origin", "*");
+    res.header("Access-Control-Allow-Methods", "GET, POST, OPTIONS");
+    res.header("Access-Control-Allow-Headers", "Origin, X-Requested-With, Content-Type, Accept");
+    next();
+});
 
 // Handle preflight requests
-app.options('*', cors());
+app.options('*', (req, res) => {
+    res.sendStatus(200);
+});
 
 app.use(express.json());
 
