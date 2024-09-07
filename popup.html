@@ -1,0 +1,84 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Better Prompt Generator</title>
+    <style>
+        body {
+            background-color: #f7fafc; /* Equivalent to bg-gray-100 */
+            padding: 1rem;
+            width: 20rem; /* Equivalent to w-80 */
+        }
+        .container {
+            background-color: #ffffff; /* Equivalent to bg-white */
+            border-radius: 0.5rem; /* Equivalent to rounded-lg */
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1); /* Equivalent to shadow-md */
+            padding: 1rem; /* Equivalent to p-4 */
+        }
+        h1 {
+            font-size: 1.5rem; /* Equivalent to text-2xl */
+            font-weight: bold; /* Equivalent to font-bold */
+            text-align: center; /* Equivalent to text-center */
+            color: #2563eb; /* Equivalent to text-blue-600 */
+            margin-bottom: 1rem; /* Equivalent to mb-4 */
+        }
+        textarea {
+            width: 100%; /* Equivalent to w-full */
+            padding: 0.5rem; /* Equivalent to p-2 */
+            border: 1px solid #d1d5db; /* Equivalent to border-gray-300 */
+            border-radius: 0.375rem; /* Equivalent to rounded-md */
+            margin-bottom: 0.75rem; /* Equivalent to mb-3 */
+            resize: vertical; /* Equivalent to resize-y */
+        }
+        .buttons {
+            display: flex;
+            gap: 0.5rem; /* Equivalent to space-x-2 */
+            margin-bottom: 0.75rem; /* Equivalent to mb-3 */
+        }
+        button {
+            flex: 1; /* Equivalent to flex-1 */
+            padding: 0.5rem 1rem; /* Equivalent to py-2 px-4 */
+            font-weight: 600; /* Equivalent to font-semibold */
+            border-radius: 0.375rem; /* Equivalent to rounded-md */
+            transition: background-color 0.3s ease-in-out; /* Equivalent to transition duration-300 ease-in-out */
+            border: none;
+            cursor: pointer;
+        }
+        #generatePrompt {
+            background-color: #3b82f6; /* Equivalent to bg-blue-500 */
+            color: white;
+        }
+        #generatePrompt:hover {
+            background-color: #2563eb; /* Equivalent to hover:bg-blue-600 */
+        }
+        #copyButton {
+            background-color: #10b981; /* Equivalent to bg-green-500 */
+            color: white;
+        }
+        #copyButton:hover {
+            background-color: #059669; /* Equivalent to hover:bg-green-600 */
+        }
+        #output {
+            background-color: #f9fafb; /* Equivalent to bg-gray-50 */
+            border: 1px solid #e5e7eb; /* Equivalent to border-gray-200 */
+            border-radius: 0.375rem; /* Equivalent to rounded-md */
+            padding: 0.75rem; /* Equivalent to p-3 */
+            min-height: 100px; /* Equivalent to min-h-[100px] */
+            word-wrap: break-word; /* Equivalent to break-words */
+        }
+    </style>
+    <script src="popup.js"></script>
+</head>
+<body>
+    <div class="container">
+        <h1>Better Prompt Generator</h1>
+        <textarea id="userInput" rows="4" placeholder="Enter your information here..."></textarea>
+        <div class="buttons">
+            <button id="generatePrompt">Generate Better Prompt</button>
+            <button id="copyButton">Copy</button>
+        </div>
+        <div id="output"></div>
+    </div>
+</body>
+</html>
