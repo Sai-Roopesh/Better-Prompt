@@ -14,11 +14,11 @@ document.addEventListener("DOMContentLoaded", () => {
         output.textContent = "Generating...";
 
         try {
-            // Update the fetch URL to point to your Vercel deployment
             const response = await fetch('https://better-prompt-ashy.vercel.app/improve-prompt', {
                 method: 'POST',
                 headers: {
-                    'Content-Type': 'application/json'
+                    'Content-Type': 'application/json',
+                    'Origin': 'chrome-extension://epadkibamflmgdggkpbbgndjfpijnoce'
                 },
                 body: JSON.stringify({ prompt: userInput })
             });
@@ -27,10 +27,11 @@ document.addEventListener("DOMContentLoaded", () => {
                 const data = await response.json();
                 output.textContent = data.improvedPrompt;
             } else {
-                output.textContent = "Failed to generate prompt.";
+                output.textContent = "Failed to generate prompt. Status: " + response.status;
             }
         } catch (error) {
             output.textContent = "Error: " + error.message;
+            console.error("Full error:", error);
         }
     });
 
