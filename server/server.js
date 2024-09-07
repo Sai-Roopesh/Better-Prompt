@@ -1,5 +1,5 @@
 import express from 'express';
-import cors from 'cors'; // Import the CORS package
+import cors from 'cors';
 import ModelClient from "@azure-rest/ai-inference";
 import { AzureKeyCredential } from "@azure/core-auth";
 import dotenv from 'dotenv';
@@ -12,9 +12,12 @@ const modelName = "gpt-4o-mini";
 
 const app = express();
 
-// Use CORS and specify your Chrome extension's origin
+// Use CORS and explicitly allow the Chrome extension's origin
 app.use(cors({
-    origin: '*', // Use your actual extension ID here
+    origin: [
+        'chrome-extension://epadkibamflmgdggkpbbgndjfpijnoce',  // Allow your Chrome extension
+        'https://better-prompt-ashy.vercel.app' // Allow your Vercel frontend
+    ],
     methods: ['GET', 'POST'],
     allowedHeaders: ['Content-Type', 'Authorization']
 }));
@@ -36,16 +39,11 @@ app.post('/improve-prompt', async (req, res) => {
                 messages: [
                     {
                         role: "system", 
-                        content: `
-                        You are a helpful assistant. 
-                        <task> Take the given prompt and improve it </task> 
-                        <constraint> Return only the improved version of the prompt without additional words. 
-                        Do not start with "Here is your improved prompt" or any similar phrasing. 
-                        The response should only contain the improved version, without any additional text or explanation.</constraint>`
+                        content: `You are a helpful assistant...`
                     },
                     { 
                         role: "user", 
-                        content: "give better prompt:" + prompt 
+                        content: `give better prompt: ${prompt}`
                     }
                 ],
                 model: modelName,
@@ -54,7 +52,6 @@ app.post('/improve-prompt', async (req, res) => {
                 top_p: 1.0
             }
         });
-        
 
         if (response.status !== "200") {
             throw response.body.error;
@@ -70,7 +67,7 @@ app.post('/improve-prompt', async (req, res) => {
 });
 
 app.listen(3000, () => {
-    console.log("Proxy server listening on port 3000");
+    console.log("Server listening on port 3000");
 });
 
 module.exports = app;
