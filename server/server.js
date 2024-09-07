@@ -14,7 +14,7 @@ const app = express();
 
 // Use CORS and specify your Chrome extension's origin
 app.use(cors({
-    origin: 'chrome-extension://epadkibamflmgdggkpbbgndjfpijnoce', // Use your actual extension ID here
+    origin: '*', // Use your actual extension ID here
     methods: ['GET', 'POST'],
     allowedHeaders: ['Content-Type', 'Authorization']
 }));

@@ -14,7 +14,8 @@ document.addEventListener("DOMContentLoaded", () => {
         output.textContent = "Generating...";
 
         try {
-            const response = await fetch('http://localhost:3000/improve-prompt', {
+            // Update the fetch URL to point to your Vercel deployment
+            const response = await fetch('https://better-prompt-ashy.vercel.app/improve-prompt', {
                 method: 'POST',
                 headers: {
                     'Content-Type': 'application/json'
