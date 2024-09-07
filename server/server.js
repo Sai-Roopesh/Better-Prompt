@@ -12,15 +12,30 @@ const modelName = "gpt-4o-mini";
 
 const app = express();
 
-// Use CORS and explicitly allow the Chrome extension's origin
+// Updated CORS configuration
+const allowedOrigins = [
+    'chrome-extension://epadkibamflmgdggkpbbgndjfpijnoce',
+    'https://better-prompt-ashy.vercel.app',
+    'https://better-prompt-git-main-sai-roopeshs-projects.vercel.app',
+    'https://better-prompt-o47u520f1-sai-roopeshs-projects.vercel.app'
+];
+
 app.use(cors({
-    origin: [
-        'chrome-extension://epadkibamflmgdggkpbbgndjfpijnoce',  // Allow your Chrome extension
-        'https://better-prompt-ashy.vercel.app' // Allow your Vercel frontend
-    ],
-    methods: ['GET', 'POST'],
+    origin: function (origin, callback) {
+        // Allow requests with no origin (like mobile apps or curl requests)
+        if (!origin) return callback(null, true);
+        if (allowedOrigins.indexOf(origin) === -1) {
+            var msg = 'The CORS policy for this site does not allow access from the specified Origin.';
+            return callback(new Error(msg), false);
+        }
+        return callback(null, true);
+    },
+    methods: ['GET', 'POST', 'OPTIONS'],
     allowedHeaders: ['Content-Type', 'Authorization']
 }));
+
+// Handle preflight requests
+app.options('*', cors());
 
 app.use(express.json());
 
@@ -66,8 +81,13 @@ app.post('/improve-prompt', async (req, res) => {
     }
 });
 
-app.listen(3000, () => {
-    console.log("Server listening on port 3000");
-});
+// For Vercel serverless deployment
+export default app;
 
-module.exports = app;
+// For local development
+if (process.env.NODE_ENV !== 'production') {
+    const PORT = process.env.PORT || 3000;
+    app.listen(PORT, () => {
+        console.log(`Server listening on port ${PORT}`);
+    });
+}
