@@ -23,7 +23,7 @@ app.use((req, res, next) => {
 
 app.use(express.json());
 
-app.post('/improve-prompt', async (req, res) => {
+app.post('/', async (req, res) => {
     const { prompt } = req.body;
 
     if (!prompt) {
