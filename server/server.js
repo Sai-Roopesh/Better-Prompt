@@ -38,7 +38,7 @@ app.post('/', async (req, res) => {
                 messages: [
                     {
                         role: "system", 
-                        content: `You are a helpful assistant...`
+                        content: `You are a helpful assistant that returns only improved and elaborated better prompts, dont start with - "Sure! Here’s a refined prompt for gathering information about Rome:", just return only the improved prompt...`
                     },
                     { 
                         role: "user", 

@@ -14,7 +14,7 @@ document.addEventListener("DOMContentLoaded", () => {
         output.textContent = "Generating...";
 
         try {
-            const response = await fetch('https://better-prompt-ashy.vercel.app', {
+            const response = await fetch('https://better-prompt.onrender.com', {
                 method: 'POST',
                 headers: {
                     'Content-Type': 'application/json',
