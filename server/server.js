@@ -1,3 +1,29 @@
+import express from 'express';
+import ModelClient from "@azure-rest/ai-inference";
+import { AzureKeyCredential } from "@azure/core-auth";
+import dotenv from 'dotenv';
+
+dotenv.config();
+
+const token = process.env.GITHUB_TOKEN;
+const endpoint = "https://models.inference.ai.azure.com";
+const modelName = "gpt-4o-mini";
+
+// Initialize the Express app
+const app = express();
+
+app.use((req, res, next) => {
+    res.setHeader('Access-Control-Allow-Origin', '*');
+    res.setHeader('Access-Control-Allow-Methods', 'GET, POST, OPTIONS');
+    res.setHeader('Access-Control-Allow-Headers', 'Content-Type');
+    if (req.method === 'OPTIONS') {
+        return res.sendStatus(200);
+    }
+    next();
+});
+
+app.use(express.json());
+
 app.post('/', async (req, res) => {
     const { prompt } = req.body;
 
@@ -48,3 +74,12 @@ app.post('/', async (req, res) => {
         res.status(500).json({ error: "Failed to improve the prompt." });
     }
 });
+
+// Specify the port for the server to listen on
+const port = process.env.PORT || 3000;
+app.listen(port, () => {
+    console.log(`Server is running on port ${port}`);
+});
+
+export default app;
+
